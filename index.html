@@ -21,49 +21,59 @@
         </div>
 
         <div class="container pt-3">
-            <h2>Compliment Generator</h2>
-            <p>Randomly generates a compliment.  <br>
-                Automatically copies to clipboard.</p>
+            <div class="row">
+                <div class="col-sm">
+                    <h2>Compliment Generator</h2>
+                    <p>Randomly generates a compliment.  <br>
+                        Automatically copies to clipboard.</p>
 
-            <div id = "compliments">
-                <i>CLICK ME to generate a compliement</i>
+                    <div id = "compliments">
+                        <i>CLICK ME to generate a compliement</i>
+                    </div>
+
+                    <br>
+
+                    <script defer src="compliment-generator.js"></script>
+
+                </div>
+                
             </div>
 
-            <script defer src="compliment-generator.js"></script>
-        </div>
+            <div class="row">
+                <div class="col-sm">
+                    <h2>Cipher</h2>
+                    <p>Cipher - Encodes Text based on key <br>
+                        Automatically copies to clipboard.</p>
 
-        <div class="container pt-3">
-            <h2>Cipher</h2>
-            <p>Cipher - Encodes Text based on key <br>
-                Automatically copies to clipboard.</p>
+                    <input type="button" value="Encrypt/Decrypt (Paste From Clipboard)" onclick="pasteencrypt()"></input>
+                    <br>
+                    <br>
+                    <br>
+                </div>
+                    
 
-            <div>
-                <label for="cipherkey">Cipher Key:<br></label>
-                <input type ="number" id="cipherkey" name="cipherkey" min="1" value="2"></input>
+                <div class="col-sm">
+                    <textarea id="ciphertext" name="ciphertext" rows="4" cols="50"></textarea>
+                    <br>
+                    <input type="button" value="Encrypt/Decrypt (Manual Entry)" onclick="handleencrypt()"></input>
+                    <br>
+                </div>
+
             </div>
-
-            <div>
-                <label for="ciphertext">Text:<br></label>
-                <textarea id="ciphertext" name="ciphertext" rows="4" cols="50"></textarea>
-            </div>
-
-            <input type="button" value="Encrypt/Decrypt" onclick="encrypt()"></input>
-
             <script defer src="cipher.js"></script>
+
+            <div class="row">
+                <div class="col-sm">
+                    <h2>Other Things</h2>
+                    <a href="squib57site/index.html">Link to main website</a> <br>
+
+                    <a href="https://itchono.github.io/dawn-of-dominion/game.html">Battleship Game I'm working on</a>
+                    
+                    <br>
+                </div>
+            </div>
             
         </div>
-
-        <div class="container pt-3">
-            <h2>Other Things</h2>
-            <a href="squib57site/index.html">Link to main website</a> <br>
-
-            <a href="https://itchono.github.io/dawn-of-dominion/game.html">Battleship Game I'm wokring on</a>
-
-        </div>
-
-        
-        
-
 
 
         <!--Bootstrap-->
