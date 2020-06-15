@@ -16,5 +16,7 @@ function encrypt() {
     
     ciphertextbox.value = reversed.join(" ")
 
+    copyToClipboard(ciphertextbox.value)
+
     
 }
