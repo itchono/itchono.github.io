@@ -10,21 +10,23 @@ function encrypt(plaintext) {
     for (i = 0; i < items.length; i++){
         var intermediate = items[i].split("").reverse()
 
-        for (j = 0; j < intermediate.length; j++) {
+        if (key != 0) {
+
+            for (j = 0; j < intermediate.length; j++) {
             
-            var asc = intermediate[j].charCodeAt()
-            
-            if (asc >= 65 && asc <= 90) {
-                asc = 25 - (asc - 65 + key) % 26 + 65
-                intermediate[j] = String.fromCharCode(asc)
+                var asc = intermediate[j].charCodeAt()
+                
+                if (asc >= 65 && asc <= 90) {
+                    asc = 25 - (asc - 65 + key) % 26 + 65
+                    intermediate[j] = String.fromCharCode(asc)
+                }
+                else if (asc >= 97 && asc <= 122) {
+                    asc = 25 - (asc - 97 + key) % 26 + 97
+                    intermediate[j] = String.fromCharCode(asc)
+                }
             }
-            else if (asc >= 97 && asc <= 122) {
-                console.log(intermediate[j])
-                asc = 25 - (asc - 97 + key) % 26 + 97
-                intermediate[j] = String.fromCharCode(asc)
-            }
+            // simple symmetrical cipher
         }
-        // simple symmetrical cipher
 
         reversed.push(intermediate.join(""))
     }
