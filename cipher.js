@@ -12,7 +12,9 @@ function encrypt(plaintext) {
 
 async function pasteencrypt() {
     const text = await navigator.clipboard.readText();
-    copyToClipboard(encrypt(text))
+    var ciphertextbox = document.getElementById("ciphertext")
+    ciphertextbox.value = encrypt(text)
+    copyToClipboard(ciphertextbox.value) 
 }
 
 function handleencrypt() {
