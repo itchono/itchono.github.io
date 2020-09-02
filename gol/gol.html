@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
     <head>
+        <!--Bootstrap-->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <title>Conway's Game of Life</title>
         <style>
@@ -12,6 +16,80 @@
     </head>
     
     <body onload="startGame()">
-        <script src="MingdeGOL.js"></script>
+
+        <div class="container pt-3 bg-light text-dark">
+            <h1>GOL</h1>
+            <p>Implementation of Conway's Game of Life in JS.<br>
+                Mingde Yin <br>
+                <a href="https://github.com/itchono">My GitHub :D</a>
+            </p>
+        </div>
+
+        <div class="container pt-3 bg-light text-dark" id="gamediv">
+
+            <p> Conway's Game of Life is a game consisting of a 2D grid of cells in which each cell is alive or dead. <br>
+            Every turn, cells will either live or die, based on the following rules:</p>
+
+            <a href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life">Description from Wikipedia</a>
+
+            <ol>
+                <li>Any live cell with fewer than two live neighbours dies, as if by underpopulation.</li>
+                <li>Any live cell with two or three live neighbours lives on to the next generation.</li>
+                <li>Any live cell with more than three live neighbours dies, as if by overpopulation.</li>
+                <li>Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.</li>
+            </ol>
+
+            <p> Place tiles down by clicking directly on the grid. Then, sit back and enjoy the show. </p>
+
+
+            <div class="row">
+                <div class="col-sm">
+                    <b>Colour Reference</b>
+                </div>
+
+                <div class="col-sm">
+                    <b>Game Controls</b>
+                </div>
+
+                <div class="col-sm">
+                    <b>Time Step (ms)</b>
+                </div>
+
+                <div class="col-sm">
+                    <b>Cell Size *RESETS GAME*</b>
+                </div>
+
+                <div class="col-sm">
+                    <b>Fun Patterns</b>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm">
+                    <p>Green = Alive <br>
+                        Grey = Dead</p>
+                </div>
+
+                <div class="col-sm">
+                    <input type="button" value="Start/Stop" onclick="startstop()"></input>
+                    <input type="button" value="Reset" onclick="reset()"></input>
+                </div>
+
+                <div class="col-sm">
+                    <input type ="number" id="timestepNUD" min="10" max="2000" step="20" value="100" onchange="FRChange()"></input>
+                </div>
+
+                <div class="col-sm">
+                    <input type ="number" id="tileSizeNUD" min="2" max="50" value="20" onchange="reset()"></input>
+                </div>
+
+                <div class="col-sm">
+                    <input type="button" value="Gliders" onclick="putgliders()"></input>
+                    <input type="button" value="Spaceships" onclick="putspaceships()"></input>
+                </div>
+            </div>
+
+            <script src="MingdeGOL.js"></script>
+        </div>   
     </body>
 </html>

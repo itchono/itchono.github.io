@@ -8,88 +8,76 @@ INIT
 
 */
 
-const TILE_SIZE = 20;
-const PADDING = 1;
+const PADDING = 1; // padding between tiles
 
-const GRID_OFFSET = 50;
+const GRID_OFFSET = 0; // option to offset the grid
+var TILE_SIZE = 20; // size of each tile
 
-const GRID_W = 50;
-const GRID_H = 30;
+
+var GRID_W;
+var GRID_H;
 
 var tiles; // tiles for map
-var pBtn; // button to play and pause
-var rBtn; // button to reset
 
-var MODE = 0;
+var MODE = 0; // gamestate
 
-var mouseX;
-var mouseY;
+var canvas; // canvas itself
+var ctx; // context for canvas
 
-var canvas;
-var ctx;
-
+var interval; // repetition interval
 
 function startGame() {
+
+    gamediv = document.getElementById("gamediv");
 
     document.addEventListener("click", mouseClicked); // add event
 
     canvas = document.createElement("canvas")
-    // this.canvas.width = window.innerWidth * BOARD_SIZE_FACTOR;
-    // this.canvas.height = window.innerHeight * BOARD_SIZE_FACTOR;
 
-    canvas.width = 1280
-    canvas.height = 720
+    canvas.width = gamediv.offsetWidth - 30; // minus padding
+    canvas.height = canvas.width * 3/5;
 
-    document.body.insertBefore(canvas, document.body.childNodes[0]); // put the canvas into our document
-    setInterval(draw, 20); // creates a routine to run the draw function
+    gamediv.appendChild(canvas);// put the canvas into our document
 
-    ctx = canvas.getContext("2d");
-    ctx.font = "30px Arial";
+    ctx = canvas.getContext("2d"); // sets the ctx variable
+
+    reset();
+    draw();
+}
+
+
+// starting/stopping the game
+function startstop() {
+    MODE = 1-MODE;
+    if (MODE == 1) interval = setInterval(draw, parseInt(document.getElementById("timestepNUD").value));
+    // creates a routine to run the draw function
+    else clearInterval(interval);    
+}
+
+function FRChange() {
+    startstop();
+    startstop();
+}
+
+function reset() {
+    MODE = 0;
+
+    TILE_SIZE = parseInt(document.getElementById("tileSizeNUD").value);
+    GRID_W = Math.floor((canvas.width-2*GRID_OFFSET)/TILE_SIZE);
+    GRID_H = Math.floor((canvas.height-2*GRID_OFFSET)/TILE_SIZE);
 
     tiles = new Array(GRID_W);
-
     for (var x = 0; x < GRID_W; x++) {
         tiles[x] = new Array(GRID_H);
         for (var y = 0; y < GRID_H; y++) tiles[x][y] = new GTile(x, y, position(x), position(y));
     }
-
-    // init buttons
-    pBtn = new PlayPauseButton(1175, 150, 70);
-
-    rBtn = new ResetButton(1175, 550, 70);
-
-    glider(10, 10);
-
-    glider(17, 14);
-    glider(1, 5);
-
 }
 
-function glider(x, y) {
-    // creates a glider at upper left coordinates x and y
+// transforms array index to corresponding position on screen
+position = (p) => p * (TILE_SIZE + PADDING) + GRID_OFFSET;
 
-    tiles[x+1][y].alive = true;
-    tiles[x+2][y+1].alive = true;
-    tiles[x][y+2].alive = true;
-    tiles[x+1][y+2].alive = true;
-    tiles[x+2][y+2].alive = true;
-}
-
-
-function position(p) {
-  // transforms array index to corresponding position on screen
-  return p * (TILE_SIZE + PADDING) + GRID_OFFSET;
-}
-
-function inCell(x, y, s) {
-  // checks if mouse is in the cell with indices ix, iy
-  return mouseX > x && mouseX < x + s && mouseY > y && mouseY < y + s;
-}
-
-function mouseToCell(n) {
-  /// apply reverse of position formula to construct cell indices
-  return (n - GRID_OFFSET) / (TILE_SIZE + PADDING);
-}
+/// apply reverse of position formula to construct cell indices
+mouseToCell = (n) => (n - GRID_OFFSET) / (TILE_SIZE + PADDING);
 
 function wrap(n, limit) {
   // allows wrap-around access of indices
@@ -97,7 +85,6 @@ function wrap(n, limit) {
   else if (n < 0) return n + limit; // underflow
   else return n - limit; // overflow
 }
-
 
 class GTile {
 
@@ -134,7 +121,6 @@ class GTile {
   }
 
   update() {
-
     if (MODE == 1) this.propagateState(); // update, if we're playing
 
     // draw
@@ -145,115 +131,21 @@ class GTile {
   }
 
   click() {
-    if (MODE == 0) {
-      this.alive = !this.alive;
-    }
-  }
-
-}
-
-class PlayPauseButton {
-  // Serves as the main play/pause button in the game. Also displays text.
-
-  constructor(x, y, s) {
-    this.posX = x;
-    this.posY = y;
-    this.SIZE = s;
-  }
-
-  update() {
-    // draw
-
-    if (MODE == 0) {
-      ctx.fillStyle = "#646464";
-      ctx.fillRect(this.posX, this.posY, this.SIZE, this.SIZE);
-
-      ctx.fillStyle = "#ffffff";
-
-      ctx.fillText("Start/Stop", this.posX, this.posY+50);
-
-
-      //text("Click on the tiles on the grid to birth or kill squares. Then, click the circle to begin.", posX - SIZE/2, posY + SIZE/2, 100, 400);
-      //text("Start", posX - SIZE/2, posY- SIZE/2, SIZE, SIZE);
-      
-    }
-    else {
-      ctx.fillStyle = "#96c896";
-      ctx.fillRect(this.posX, this.posY, this.SIZE, this.SIZE);
-
-      ctx.fillStyle = "#ffffff";
-      ctx.fillText("Start/Stop", this.posX, this.posY + 50);
-      //text("Simulation Running. To terminate, click the circle.", posX - SIZE/2, posY + SIZE/2, 100, 400);
-      //text("Stop", posX - SIZE/2, posY - SIZE/2, SIZE, SIZE);
-    }
-
-    
-  }
-
-  click() {
-    if (inCell(this.posX, this.posY, this.SIZE)) MODE = 1-MODE;
-  }
-}
-
-class ResetButton {
-  // Resets the Game
-
-
-  constructor(x, y, s) {
-    this.posX = x;
-    this.posY = y;
-    this.SIZE = s;
-  }
-
-  update() {
-    // draw
-
-    ctx.fillStyle = "#646464";
-    ctx.fillRect(this.posX, this.posY, this.SIZE, this.SIZE);
-
-    ctx.fillStyle = "#ffffff";
-
-    ctx.fillText("Reset", this.posX, this.posY + 50);
-
-    //fill(255, 255, 255);
-    //text("Reset", posX - SIZE/2, posY- SIZE/2, SIZE, SIZE);
-    
-  }
-
-  click() {
-
-    if (inCell(this.posX, this.posY, this.SIZE)) {
-      MODE = 0;
-      for (var x = 0; x < GRID_W; x++) {
-        for (var y = 0; y < GRID_H; y++) tiles[x][y].alive = false;
-      }
-
-    } 
+    if (MODE == 0) this.alive = !this.alive;
   }
 }
 
 function mouseClicked(e) {
-  mouseX = e.clientX - canvas.offsetLeft;
-  mouseY = e.clientY - canvas.offsetTop;
+  var clickX = mouseToCell(e.clientX - canvas.offsetLeft + window.scrollX);
+  var clickY = mouseToCell(e.clientY - canvas.offsetTop + window.scrollY);
 
-  pBtn.click();
-  rBtn.click();
-
-  var clickX = mouseToCell(mouseX);
-  var clickY = mouseToCell(mouseY);
-  if (clickX >= 0 && clickX < GRID_W && clickY >= 0 && clickY < GRID_H) {
-      tiles[parseInt(clickX)][parseInt(clickY)].click();
-  }
+  if (clickX >= 0 && clickX < GRID_W && clickY >= 0 && clickY < GRID_H) tiles[parseInt(clickX)][parseInt(clickY)].click();
 
   draw(); // update screen
 }
 
-
-
-
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height); // clears the canvas for redraw
-  //background(60, 60, 60);
 
   if (MODE == 1) {
     // calculate
@@ -266,8 +158,47 @@ function draw() {
   for (var x = 0; x < GRID_W; x++) {
     for (var y = 0; y < GRID_H; y++) tiles[x][y].update();
   }
-
-  pBtn.update();
-  rBtn.update();
   
+}
+
+
+function glider(x, y) {
+    // creates a glider at upper left coordinates x and y
+    tiles[wrap(x+1, GRID_W)][wrap(y, GRID_H)].alive = true;
+    tiles[wrap(x+2, GRID_W)][wrap(y+1, GRID_H)].alive = true;
+    tiles[wrap(x, GRID_W)][wrap(y+2, GRID_H)].alive = true;
+    tiles[wrap(x+1, GRID_W)][wrap(y+2, GRID_H)].alive = true;
+    tiles[wrap(x+2, GRID_W)][wrap(y+2, GRID_H)].alive = true;
+}
+
+function spaceship(x,y) {
+    // creates a spaceship at upper left coordinates x and y
+
+    tiles[wrap(x+1, GRID_W)][wrap(y, GRID_H)].alive = true;
+    tiles[wrap(x+2, GRID_W)][wrap(y, GRID_H)].alive = true;
+    tiles[wrap(x+3, GRID_W)][wrap(y, GRID_H)].alive = true;
+    tiles[wrap(x+4, GRID_W)][wrap(y, GRID_H)].alive = true;
+
+    tiles[wrap(x, GRID_W)][wrap(y+1, GRID_H)].alive = true;
+    tiles[wrap(x+4, GRID_W)][wrap(y+1, GRID_H)].alive = true;
+
+    tiles[wrap(x+4, GRID_W)][wrap(y+2, GRID_H)].alive = true;
+
+    tiles[wrap(x, GRID_W)][wrap(y+3, GRID_H)].alive = true;
+    tiles[wrap(x+3, GRID_W)][wrap(y+3, GRID_H)].alive = true;
+}
+
+function putgliders() {
+    // create gliders
+    glider(1, 5);
+    glider(10, 10);
+    glider(17, 14);
+    
+}
+
+function putspaceships() {
+    // create spaceships
+    spaceship(5, 1);
+    spaceship(4, 16);
+    spaceship(12, 19);
 }
