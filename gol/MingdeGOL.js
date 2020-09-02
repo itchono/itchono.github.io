@@ -130,9 +130,7 @@ class GTile {
     ctx.fillRect(this.posX, this.posY, TILE_SIZE, TILE_SIZE);
   }
 
-  click() {
-    this.alive = !this.alive;
-  }
+  click() {if (MODE == 0) this.alive = !this.alive;}
 }
 
 function mouseClicked(e) {
@@ -186,19 +184,4 @@ function spaceship(x,y) {
 
     tiles[wrap(x, GRID_W)][wrap(y+3, GRID_H)].alive = true;
     tiles[wrap(x+3, GRID_W)][wrap(y+3, GRID_H)].alive = true;
-}
-
-function putgliders() {
-    // create gliders
-    glider(1, 5);
-    glider(10, 10);
-    glider(17, 14);
-    
-}
-
-function putspaceships() {
-    // create spaceships
-    spaceship(5, 1);
-    spaceship(4, 16);
-    spaceship(12, 19);
 }
