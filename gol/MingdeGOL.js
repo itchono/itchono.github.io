@@ -131,7 +131,7 @@ class GTile {
   }
 
   click() {
-    if (MODE == 0) this.alive = !this.alive;
+    this.alive = !this.alive;
   }
 }
 
