@@ -58,6 +58,21 @@ function startGame() {
 
     rBtn = new ResetButton(1175, 550, 70);
 
+    glider(10, 10);
+
+    glider(17, 14);
+    glider(1, 5);
+
+}
+
+function glider(x, y) {
+    // creates a glider at upper left coordinates x and y
+
+    tiles[x+1][y].alive = true;
+    tiles[x+2][y+1].alive = true;
+    tiles[x][y+2].alive = true;
+    tiles[x+1][y+2].alive = true;
+    tiles[x+2][y+2].alive = true;
 }
 
 
