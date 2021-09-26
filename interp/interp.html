@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <!--Bootstrap-->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+        
+        <title>Linear Interpolator</title>
+      
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    </head>
+
+    <body>
+        <div class="container pt-3 bg-light text-dark">
+            <div class="row bg-light">
+                <div class="col-sm">
+
+                    <script>
+                        function interp() {
+                            const x  = document.getElementById('interp');
+
+                            pa = parseFloat(x.elements[3].value)
+                            pb = parseFloat(x.elements[4].value)
+                            ta = parseFloat(x.elements[0].value)
+                            tb = parseFloat(x.elements[1].value)
+
+                            console.log(pa)
+
+                            if (x.elements[2].value) {
+                                
+                                tt = parseFloat(x.elements[2].value)
+                                console.log(tt)
+
+                                pp = (tt-ta)/(tb-ta) * (pb-pa) + pa
+                                document.getElementById("ansbox").innerHTML = "Property Value is " + pp;
+                            }
+                            else {
+                                pp = parseFloat(x.elements[5].value)
+
+                                console.log(pp)
+                                tt = (pp-pa)/(pb-pa) * (tb-ta) + ta
+                                document.getElementById("ansbox").innerHTML = "Index Value is " + tt;
+                            }
+                        }
+                        
+                    </script>
+
+                    <h2>Linear Interpolator</h2>
+                    <p>Leave either index x or property at x blank, and the calculator will solve for it. <br>
+                        This should be useful for things like thermodynamic tables.</p>
+                    
+                    <form action="calculate()" id="interp" style="text-align:right">
+                        <div class="field">
+                            <label for="xA">Index A</label> <label for="xB">, B</label>  <label for="x">, x</label> 
+                            <input type="text" id="xA" name="xA" size=10/> <input type="text" id="xB" name="xB" size=10/> <input type="text" id="x" name="x" size=10/>
+                        </div>
+
+                        <div class="field">
+                            <label for="pA">Property at Index A</label> <label for="pB">, B</label> <label for="p">, x</label>
+                            <input type="text" id="pA" name="pA" size=10/>     <input type="text" id="pB" name="pB" size=10/> <input type="text" id="p" name="p" size=10/>
+                        </div>
+
+                        <input type="button" onclick="interp()" value="Calculate">
+                        
+                    </form>
+                    <div id="ansbox">
+
+                    </div>
+
+                    <a href="../index.html">Back to the main page</a>
+                </div>
+
+                <div class="col-sm">
+                    <h2>Guide</h2>
+                    <img src="figure.png" width="100%">
+                </div>
+            </div>
+        </div>
+
+        <!--Bootstrap-->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    </body>
+</html>

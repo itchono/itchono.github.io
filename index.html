@@ -85,56 +85,8 @@
                 </div>
 
                 <div class="col-sm">
-
-                    <script>
-                        function interp() {
-                            const x  = document.getElementById('interp');
-
-                            pa = parseFloat(x.elements[3].value)
-                            pb = parseFloat(x.elements[4].value)
-                            ta = parseFloat(x.elements[0].value)
-                            tb = parseFloat(x.elements[1].value)
-
-                            console.log(pa)
-
-                            if (x.elements[2].value) {
-                                
-                                tt = parseFloat(x.elements[2].value)
-                                console.log(tt)
-
-                                pp = (tt-ta)/(tb-ta) * (pb-pa) + pa
-                                document.getElementById("ansbox").innerHTML = "Property Value is " + pp;
-                            }
-                            else {
-                                pp = parseFloat(x.elements[5].value)
-
-                                console.log(pp)
-                                tt = (pp-pa)/(pb-pa) * (tb-ta) + ta
-                                document.getElementById("ansbox").innerHTML = "Index Value is " + tt;
-                            }
-                        }
-                        
-                    </script>
-
-                    <h2>Linear Interpolator</h2>
-                    
-                    <form action="calculate()" id="interp" style="text-align:right">
-                        <div class="field">
-                            <label for="xA">Index A</label> <label for="xB">, B</label>  <label for="x">, x</label> 
-                            <input type="text" id="xA" name="xA" size=10/> <input type="text" id="xB" name="xB" size=10/> <input type="text" id="x" name="x" size=10/>
-                        </div>
-
-                        <div class="field">
-                            <label for="pA">Property at Index A</label> <label for="pB">, B</label> <label for="p">, x</label>
-                            <input type="text" id="pA" name="pA" size=10/>     <input type="text" id="pB" name="pB" size=10/> <input type="text" id="p" name="p" size=10/>
-                        </div>
-
-                        <input type="button" onclick="interp()" value="Calculate">
-                        
-                    </form>
-                    <div id="ansbox">
-
-                    </div>
+                    <h2>Scientific Projects</h2>
+                    <a href="/interp/interp.html">Linear Interpolator</a>
                 </div>
             </div>
             
